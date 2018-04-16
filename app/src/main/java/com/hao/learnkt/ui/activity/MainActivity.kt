@@ -11,22 +11,29 @@ import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.hao.learnkt.R
+import com.hao.learnkt.common.App
 import com.hao.learnkt.common.preference
 import com.hao.learnkt.ui.fragment.GifFragment
 import com.hao.learnkt.ui.fragment.PicFragment
 import com.hao.learnkt.ui.fragment.TextFragment
+import com.hao.learnkt.utils.FileUtil
+import com.hao.learnkt.utils.FileUtil.Companion.getFolderSize
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import java.io.File
 import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
-    val mFragments: Array<Fragment> = arrayOf(TextFragment(), PicFragment(), GifFragment())
+    private val mTitles: Array<String> = arrayOf("段子鸡汤", "花瓣福利", "动态搞笑图")
+    private val mFragments: Array<Fragment> = arrayOf(TextFragment(), PicFragment(), GifFragment())
 
+    private var mDefaultIndex: Int by preference(this, "fragmentIndex", 0)
 
-    var mDefaultIndex: Int by preference(this, "fragmentIndex", 0)
-
-    var mCurrentIndex: Int by Delegates.observable(0) { _, _, new ->
+    private var mCurrentIndex: Int by Delegates.observable(0) { _, _, new ->
         navigationView.setCheckedItem(when (new) {
             0 -> R.id.nav_text
             1 -> R.id.nav_pic
@@ -35,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    var mBackPressedTime by Delegates.observable(0L) { _, old, new ->
+    private var mBackPressedTime: Long by Delegates.observable(0L) { _, old, new ->
         if (new - old > 1000) {
             showSnackbar(drawerLayout, getString(R.string.exit_message))
         }
@@ -82,10 +89,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_text -> switchFragment(0, item)
                 R.id.nav_pic -> switchFragment(1, item)
                 R.id.nav_gif -> switchFragment(2, item)
+                R.id.nav_clear -> clearCache(item)
                 else -> false
             }
         }
 
+        mCurrentIndex = mDefaultIndex
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout, mFragments[mCurrentIndex]).commit()
+        toolBar.title = mTitles[mCurrentIndex]
     }
 
     private fun switchFragment(index: Int, menu: MenuItem): Boolean {
@@ -115,12 +126,27 @@ class MainActivity : AppCompatActivity() {
                 System.currentTimeMillis()
             }
         }
-        return super.onKeyDown(keyCode, event)
+        return true
     }
 
     private fun showSnackbar(viewGroup: ViewGroup, text: String, duration: Int = 1000) {
         val snackbar = Snackbar.make(viewGroup, text, duration)
         snackbar.view.setBackgroundColor(ContextCompat.getColor(viewGroup.context, R.color.colorPrimary))
         snackbar.show()
+    }
+
+    private fun clearCache(menu: MenuItem): Boolean {
+        menu.title = "正在清理..."
+        doAsync {
+            val glideCacheDir = Glide.getPhotoCacheDir(this@MainActivity) as File
+            var appCacheDir = App.instance.cacheDir
+            var b1 = FileUtil.deleteFolder(glideCacheDir)
+            var b2 = FileUtil.deleteFolder(appCacheDir)
+            uiThread {
+                showSnackbar(drawerLayout, "清理完成")
+                menu.title = "清理完成"
+            }
+        }
+        return true
     }
 }

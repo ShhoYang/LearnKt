@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smile</string>
+    <string name="app_name">Kotlin</string>
     <string name="home_page">首页</string>
     <string name="menu_toolbar_more">more</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
