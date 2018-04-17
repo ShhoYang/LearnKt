@@ -36,11 +36,12 @@ class GifFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+       // mLoading = true
     }
 
     private fun initView() {
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)!!
         recyclerView.adapter = GifAdapter(mDatas, recyclerView)
         recyclerView.setOnTouchListener { _, _ ->
             if (!mLoading && !recyclerView.canScrollVertically(1)) {

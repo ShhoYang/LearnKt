@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -52,31 +53,19 @@ class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         Glide.with(holder.gifImageView)
-                .asBitmap()
-                .transition(BitmapTransitionOptions().crossFade(800))
+                //.asBitmap()
+                .load(datas?.get(position)?.img)
+               // .transition(BitmapTransitionOptions().crossFade(800))
                 .apply(mRequestOptions)
-                .listener(object : RequestListener<Bitmap> {
-                    override fun onResourceReady(resource: Bitmap, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        val w: Int = DisplayUtil.getScreenHeight(holder.gifImageView.context)
-                        val h: Int = (resource.height.toFloat() * w / resource.width).toInt()
-                        holder.gifImageView.layoutParams.height = h
-                        mHeights.put(position, h)
-
-                        holder.textView.visibility = View.VISIBLE
-                        holder.textView.text = datas?.get(position)?.title
-                        return false
-                    }
-
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
-                        return false
-                    }
-                }).load(datas?.get(position)?.img).into(holder.gifImageView)
+                .into(holder.gifImageView)
 
         if (mHeights.containsKey(position)) {
             holder.gifImageView.layoutParams.height = mHeights[position]!!
             holder.textView.visibility = View.VISIBLE
             holder.textView.text = datas?.get(position)?.title
         }
+        holder.textView.visibility = View.VISIBLE
+        holder.textView.text = datas?.get(position)?.title
         holder.gifImageView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 gifPause()
@@ -105,7 +94,7 @@ class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) :
     }
 
     class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val gifImageView: GifImageView = itemView.find(R.id.gifImageView)
+        val gifImageView: ImageView = itemView.find(R.id.gifImageView)
         val textView: TextView = itemView.find(R.id.textView)
         val progressBar: DonutProgress = itemView.find(R.id.progressBar)
     }

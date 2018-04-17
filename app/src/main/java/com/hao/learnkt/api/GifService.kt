@@ -1,5 +1,6 @@
 package com.hao.learnkt.api
 
+import android.util.Log
 import com.google.gson.Gson
 import com.hao.learnkt.common.Constant.Companion.buildUrl
 import com.yhao.model.bean.Gif
@@ -26,6 +27,7 @@ class GifService {
                 return null
             }
 
+            Log.d("1111qqqqqqqqq",json)
             val data = Gson().fromJson(json, GifResult::class.java)
             return data.showapi_res_body.contentlist
         }
