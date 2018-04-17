@@ -70,7 +70,8 @@ class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) :
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                         return false
                     }
-                }).into(holder.gifImageView)
+                }).load(datas?.get(position)?.img).into(holder.gifImageView)
+
         if (mHeights.containsKey(position)) {
             holder.gifImageView.layoutParams.height = mHeights[position]!!
             holder.textView.visibility = View.VISIBLE
