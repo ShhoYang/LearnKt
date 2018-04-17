@@ -21,7 +21,6 @@ class FileUtil {
                         size += f.length()
                     }
                 }
-                size += getFolderSize(file)
             } catch (e: Exception) {
                 return size
             }

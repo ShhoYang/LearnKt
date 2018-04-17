@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.text.format.Formatter
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,13 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.File
 import kotlin.properties.Delegates
+
+fun showSnackbar(viewGroup: ViewGroup, text: String, duration: Int = 1000) {
+    val snackbar = Snackbar.make(viewGroup, text, duration)
+    snackbar.view.setBackgroundColor(ContextCompat.getColor(viewGroup.context, R.color.colorPrimary))
+    snackbar.show()
+}
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -74,12 +82,22 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
+                navigationView.menu.findItem(R.id.nav_clear).title = "清理缓存"
                 mMenuOpen = false
             }
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 mMenuOpen = true
+                doAsync {
+                    val glideCacheDir = Glide.getPhotoCacheDir(this@MainActivity) as File
+                    val appCacheDir = App.instance.cacheDir
+                    var size: Long = FileUtil.getFolderSize(glideCacheDir) + FileUtil.getFolderSize(appCacheDir)
+                    var formatFileSize = Formatter.formatFileSize(this@MainActivity, size)
+                    uiThread {
+                        navigationView.menu.findItem(R.id.nav_clear).title = "清理缓存$formatFileSize"
+                    }
+                }
             }
 
         })
@@ -94,8 +112,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         mCurrentIndex = mDefaultIndex
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, mFragments[mCurrentIndex]).commit()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
         toolBar.title = mTitles[mCurrentIndex]
     }
 
@@ -127,12 +151,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
-    }
-
-    private fun showSnackbar(viewGroup: ViewGroup, text: String, duration: Int = 1000) {
-        val snackbar = Snackbar.make(viewGroup, text, duration)
-        snackbar.view.setBackgroundColor(ContextCompat.getColor(viewGroup.context, R.color.colorPrimary))
-        snackbar.show()
     }
 
     private fun clearCache(menu: MenuItem): Boolean {
