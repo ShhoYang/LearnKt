@@ -29,9 +29,13 @@ import pl.droidsonroids.gif.GifImageView
  */
 class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) : RecyclerView.Adapter<GifAdapter.VH>() {
 
-    var mHeights: MutableMap<Int, Int> = HashMap()
-    val mRequestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-    var gifDrawable: GifDrawable? = null
+    private var mHeights: MutableMap<Int, Int> = HashMap()
+    private val mRequestOptions = RequestOptions()
+            .error(R.drawable.my_logo)
+            .placeholder(R.drawable.my_logo)
+            .fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+    private var gifDrawable: GifDrawable? = null
 
     init {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -53,12 +57,14 @@ class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) :
     override fun onBindViewHolder(holder: VH, position: Int) {
         Glide.with(holder.gifImageView)
                 .asBitmap()
-                .transition(BitmapTransitionOptions().crossFade(800))
+                // .load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524024794344&di=4a93d029a7879e6126f08412ee35be5f&imgtype=0&src=http%3A%2F%2Fold.bz55.com%2Fuploads%2Fallimg%2F130725%2F1-130H5105020.jpg")
+                .load(datas?.get(position)?.img)
+                .transition(BitmapTransitionOptions().crossFade(500))
                 .apply(mRequestOptions)
                 .listener(object : RequestListener<Bitmap> {
                     override fun onResourceReady(resource: Bitmap, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        val w: Int = DisplayUtil.getScreenHeight(holder.gifImageView.context)
-                        val h: Int = (resource.height.toFloat() * w / resource.width).toInt()
+                        val w: Int = DisplayUtil.getScreenWidth(holder.gifImageView.context) / 2
+                        val h: Int = (w * resource.height.toDouble() / resource.width).toInt()
                         holder.gifImageView.layoutParams.height = h
                         mHeights.put(position, h)
 
@@ -70,7 +76,7 @@ class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) :
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                         return false
                     }
-                }).load(datas?.get(position)?.img).into(holder.gifImageView)
+                }).into(holder.gifImageView)
 
         if (mHeights.containsKey(position)) {
             holder.gifImageView.layoutParams.height = mHeights[position]!!
@@ -84,7 +90,7 @@ class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) :
                     override fun onProgress(readBytes: Long, totalBytes: Long, done: Boolean) {
                         holder.progressBar.post {
                             holder.progressBar.visibility = View.VISIBLE
-                            holder.progressBar.progress = readBytes.toFloat() / totalBytes * 100
+                            holder.progressBar.progress = (readBytes.toFloat().toDouble() / totalBytes * 100).toFloat()
                         }
                     }
 

@@ -18,7 +18,7 @@ class GifService {
             return buildUrl("$baseUrl?page=$page&maxResult=$maxResult")
         }
 
-        fun getData(page: Int, maxResult: Int = 5): List<Gif>? {
+        fun getData(page: Int, maxResult: Int = 20): List<Gif>? {
             var json: String? = null
             try {
                 json = URL(buildBaseUrl(page, maxResult)).readText()

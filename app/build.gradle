@@ -24,7 +24,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.0'
     //图片
     implementation 'com.github.bumptech.glide:glide:4.0.0'
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.12'
     //网络
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'com.squareup.okio:okio:1.13.0'
@@ -47,4 +47,5 @@ dependencies {
     implementation 'com.orhanobut:logger:2.1.1'
     //进度
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+    implementation 'com.android.support:support-v4:27.1.1'
 }

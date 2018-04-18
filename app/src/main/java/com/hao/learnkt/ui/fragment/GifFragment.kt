@@ -3,6 +3,7 @@ package com.hao.learnkt.ui.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -23,7 +24,7 @@ import kotlin.properties.Delegates
 class GifFragment : Fragment() {
 
     private var mDatas: MutableList<Gif> = ArrayList()
-    private var mCurrentPage: Int = 0
+    private var mCurrentPage: Int = 1
     private var mLoading by Delegates.observable(true) { _, _, new ->
         refreshLayout.isRefreshing = new
     }
@@ -36,11 +37,12 @@ class GifFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        loadData()
     }
 
     private fun initView() {
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.adapter = GifAdapter(mDatas, recyclerView)
         recyclerView.setOnTouchListener { _, _ ->
             if (!mLoading && !recyclerView.canScrollVertically(1)) {
@@ -74,7 +76,6 @@ class GifFragment : Fragment() {
                     recyclerView.adapter.notifyDataSetChanged()
                 } else {
                     var src = mDatas.size
-                    mDatas.clear()
                     mDatas.addAll(data)
                     recyclerView.adapter.notifyItemRangeInserted(src, data.size)
                 }
