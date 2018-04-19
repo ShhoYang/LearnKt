@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 /**
  * @author Yang Shihao
  */
-class PagerAdapter(val fm: FragmentManager, val fragments: Array<Fragment>, val titles: Array<String>)
+class PagerAdapter(fm: FragmentManager, val fragments: MutableList<Fragment>, val titles: MutableList<String>)
     : FragmentStatePagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {

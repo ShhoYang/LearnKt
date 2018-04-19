@@ -1,6 +1,7 @@
 package com.hao.learnkt.ui.fragment
 
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,8 @@ class TextFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tabLayout.tabMode = TabLayout.MODE_FIXED
         tabLayout.setupWithViewPager(viewPager)
-        viewPager.adapter = PagerAdapter(childFragmentManager, arrayOf(JokeFragment(), RhesisFragment()),arrayOf("搞笑段子", "励志鸡汤") )
+        viewPager.adapter = PagerAdapter(childFragmentManager, arrayListOf(JokeFragment(), RhesisFragment()), arrayListOf("搞笑段子", "励志鸡汤"))
     }
 }

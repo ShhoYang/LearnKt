@@ -42,7 +42,7 @@ class GifFragment : Fragment() {
 
     private fun initView() {
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = GifAdapter(mDatas, recyclerView)
         recyclerView.setOnTouchListener { _, _ ->
             if (!mLoading && !recyclerView.canScrollVertically(1)) {

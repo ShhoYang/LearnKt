@@ -11,6 +11,7 @@ import java.net.URL
  */
 
 class JokeService {
+
     companion object {
         val baseUrl = "http://route.showapi.com/341-1"
 
@@ -18,7 +19,7 @@ class JokeService {
             return buildUrl("$baseUrl?page=$page&maxResult=$maxResult")
         }
 
-        fun getData(page: Int, maxResult: Int = 10): List<Joke>? {
+        fun getData(page: Int, maxResult: Int = 20): List<Joke>? {
             var forecastJsonStr: String? = null
             try {
                 forecastJsonStr = URL(buildBaseUrl(page, maxResult)).readText()

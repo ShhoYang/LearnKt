@@ -20,7 +20,6 @@ import com.hao.learnkt.ui.fragment.GifFragment
 import com.hao.learnkt.ui.fragment.PicFragment
 import com.hao.learnkt.ui.fragment.TextFragment
 import com.hao.learnkt.utils.FileUtil
-import com.hao.learnkt.utils.FileUtil.Companion.getFolderSize
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -128,12 +127,11 @@ class MainActivity : AppCompatActivity() {
             var beginTransaction = supportFragmentManager.beginTransaction()
             if (!mFragments[index].isAdded) {
                 beginTransaction.add(R.id.frameLayout, mFragments[index])
-                beginTransaction.show(mFragments[index])
+
             }
 
-            beginTransaction.hide(mFragments[mCurrentIndex])
+            beginTransaction.show(mFragments[index]).hide(mFragments[mCurrentIndex]).commitAllowingStateLoss()
             mCurrentIndex = index
-            beginTransaction.commitAllowingStateLoss()
             toolBar.title = menu.title
             menu.isChecked = true
         }
