@@ -40,6 +40,7 @@ class PicAdapter(var datas: MutableList<Huaban>?) : RecyclerView.Adapter<PicAdap
     override fun onBindViewHolder(holder: VH, position: Int) {
         Glide.with(holder.ivPic.context)
                 .asBitmap()
+                .load(datas?.get(position)?.thumb)
                 .transition(BitmapTransitionOptions().crossFade(800))
                 .listener(object : RequestListener<Bitmap> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
@@ -47,7 +48,6 @@ class PicAdapter(var datas: MutableList<Huaban>?) : RecyclerView.Adapter<PicAdap
                     }
 
                     override fun onResourceReady(resource: Bitmap, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-
                         val w: Int = DisplayUtil.getScreenWidth(holder.ivPic.context) / 2
                         val h: Int = (w.toFloat() * resource.height / resource.width).toInt()
                         holder.ivPic.layoutParams.height = h
@@ -56,6 +56,7 @@ class PicAdapter(var datas: MutableList<Huaban>?) : RecyclerView.Adapter<PicAdap
                     }
 
                 })
+                .into(holder.ivPic)
         if (mHeights.containsKey(position)) {
             holder.ivPic.layoutParams.height = mHeights[position]!!
         }
