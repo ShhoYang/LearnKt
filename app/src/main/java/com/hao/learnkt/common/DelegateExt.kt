@@ -47,23 +47,23 @@ private class Preference<T>(val context: Context, val key: String, val default: 
         putPreference(pref, key, value)
     }
 
-    private fun <T> getPreference(pref: SharedPreferences, key: String, default: T): T {
+    private fun <T> getPreference(pref: SharedPreferences, key: String, default: T): T = with(pref) {
         val value: Any? = when (default) {
-            is String -> pref.getString(key, default)
-            is Int -> pref.getInt(key, default)
-            is Boolean -> pref.getBoolean(key, default)
-            is Float -> pref.getFloat(key, default)
+            is String -> getString(key, default)
+            is Int -> getInt(key, default)
+            is Boolean -> getBoolean(key, default)
+            is Float -> getFloat(key, default)
             else -> throw IllegalAccessException("this type can not saved into preference")
         }
         return value as T
     }
 
-    private fun <T> putPreference(pref: SharedPreferences, key: String, value: T) {
+    private fun <T> putPreference(pref: SharedPreferences, key: String, value: T) = with(pref.edit()) {
         when (value) {
-            is String -> pref.edit().putString(key, value)
-            is Int -> pref.edit().putInt(key, value)
-            is Boolean -> pref.edit().putBoolean(key, value)
-            is Float -> pref.edit().putFloat(key, value)
+            is String -> putString(key, value)
+            is Int -> putInt(key, value)
+            is Boolean -> putBoolean(key, value)
+            is Float -> putFloat(key, value)
             else -> throw IllegalAccessException("this type can not saved into preference")
         }.apply()
     }
