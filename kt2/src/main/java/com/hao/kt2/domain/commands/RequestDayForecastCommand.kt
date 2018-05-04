@@ -11,6 +11,6 @@ class RequestDayForecastCommand(
         private val forecastProvider: ForecastProvider = ForecastProvider()) :
         Command<Forecast> {
 
-    override fun execute() = forecastProvider.reauestForecast(id)
+    override fun execute() = forecastProvider.requestForecast(id)
 
 }

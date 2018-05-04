@@ -3,7 +3,8 @@ package com.hao.kt2.ui
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toolbar
+import android.support.v7.widget.Toolbar
+import android.util.Log
 import com.hao.kt2.R
 import com.hao.kt2.adapter.ForecastListAdapter
 import com.hao.kt2.domain.commands.RequestForecastCommand
@@ -18,19 +19,21 @@ import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity(), ToolbarManager {
 
+    private val TAG = "MainActivity"
+
     private val zipCode: Long by DelegatesExt.preference(this, SettingActivity.ZIP_CODE, SettingActivity.DEFAULT_ZIP)
 
-    override val toolbar by lazy { find<Toolbar>(R.id.toolbar) }
+    override val toolbar by lazy {
+        find<Toolbar>(R.id.toolbar)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initToolbar()
-        recyclerView.layoutManager = LinearLayoutManager(this)
         attachToScroll(recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -38,11 +41,16 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
     }
 
     private fun loadData() = async(UI) {
-        val result = bg { RequestForecastCommand(zipCode).execute() }
+        Log.d(TAG, "UI = " + Thread.currentThread().name)
+        val result = bg {
+            Log.d(TAG, "bg = " + Thread.currentThread().name)
+            RequestForecastCommand(zipCode).execute() }
+        Log.d(TAG, "update bef = " + Thread.currentThread().name)
         updateUI(result.await())
     }
 
     private fun updateUI(weekForecast: ForecastList) {
+        Log.d(TAG, "updateUI = " + Thread.currentThread().name)
         val adapter = ForecastListAdapter(weekForecast) {
             startActivity<DetailsActivity>(
                     DetailsActivity.ID to it.id,

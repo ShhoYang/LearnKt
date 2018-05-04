@@ -2,7 +2,7 @@ package com.hao.kt2.ui
 
 import android.support.v7.graphics.drawable.DrawerArrowDrawable
 import android.support.v7.widget.RecyclerView
-import android.widget.Toolbar
+import android.support.v7.widget.Toolbar
 import com.hao.kt2.App
 import com.hao.kt2.R
 import com.hao.kt2.extensions.ctx
@@ -32,6 +32,7 @@ interface ToolbarManager {
             return@setOnMenuItemClickListener true
         }
     }
+
 
     fun enableHomeAsUp(up: () -> Unit) {
         toolbar.navigationIcon = createUpDrawable()

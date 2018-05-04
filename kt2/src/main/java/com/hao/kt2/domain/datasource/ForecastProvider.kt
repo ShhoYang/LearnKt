@@ -16,12 +16,12 @@ class ForecastProvider(private val sources: List<ForecastDataSource> = ForecastP
         val SOURCES by lazy { listOf(ForecastDb(), ForecastServer()) }
     }
 
-    fun requeatByZipCode(zipCode: Long, days: Int): ForecastList = requestToSources {
+    fun requestByZipCode(zipCode: Long, days: Int): ForecastList = requestToSources {
         val res = it.requestForecastByZipCode(zipCode, todayTimeSpan())
         if (res != null && res.size != 0) res else null
     }
 
-    fun reauestForecast(id: Long): Forecast = requestToSources { it.requestDayForecast(id) }
+    fun requestForecast(id: Long): Forecast = requestToSources { it.requestDayForecast(id) }
 
     private fun todayTimeSpan() = System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS
 

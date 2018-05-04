@@ -11,10 +11,10 @@ import com.hao.kt2.domain.model.Forecast as ModelForecast
 class ServerDataMapper {
 
     fun convertToDomain(zipCode: Long, forecast: ForecastResult) = with(forecast) {
-        ForecastList(zipCode, city.name, city.country, convertFroecastListToDomain(list))
+        ForecastList(zipCode, city.name, city.country, convertForecastListToDomain(list))
     }
 
-    private fun convertFroecastListToDomain(list: List<Forecast>): List<ModelForecast> {
+    private fun convertForecastListToDomain(list: List<Forecast>): List<ModelForecast> {
         return list.mapIndexed { index, forecast ->
             val dt = Calendar.getInstance().timeInMillis + TimeUnit.DAYS.toMillis(index.toLong())
             convertForecastItemToDomain(forecast.copy(dt = dt))
@@ -25,5 +25,5 @@ class ServerDataMapper {
         ModelForecast(-1, dt, weather[0].description, temp.max.toInt(), temp.min.toInt(), generateIconUrl(weather[0].icon))
     }
 
-    private fun generateIconUrl(iconCode: String) = "http://openweathermap/org/img/w$iconCode.png"
+    private fun generateIconUrl(iconCode: String) = "http://openweathermap.org/img/w/$iconCode.png"
 }
