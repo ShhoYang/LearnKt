@@ -1,4 +1,4 @@
-package com.hao.kt2.model
+package com.hao.kt2.domain.model
 
 data class ForecastList(val id: Long, val city: String, val country: String,
         val dailyForecast: List<Forecast>) {

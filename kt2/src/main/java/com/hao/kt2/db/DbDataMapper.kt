@@ -1,7 +1,7 @@
 package com.hao.kt2.db
 
-import com.hao.kt2.model.Forecast
-import com.hao.kt2.model.ForecastList
+import com.hao.kt2.domain.model.Forecast
+import com.hao.kt2.domain.model.ForecastList
 
 /**
  * @author Yang Shihao

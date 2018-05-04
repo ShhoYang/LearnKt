@@ -44,6 +44,7 @@ class Preference<T>(private val context: Context, private val key: String, priva
         val v = when (defaultValue) {
             is String -> getString(key, defaultValue)
             is Int -> getInt(key, defaultValue)
+            is Long -> getLong(key, defaultValue)
             is Boolean -> getBoolean(key, defaultValue)
             else -> throw IllegalArgumentException("This type can not saved into preference")
         }
@@ -55,6 +56,7 @@ class Preference<T>(private val context: Context, private val key: String, priva
         when (value) {
             is String -> putString(key, value)
             is Int -> putInt(key, value)
+            is Long -> putLong(key, value)
             is Boolean -> putBoolean(key, value)
             else -> throw IllegalArgumentException("This type can not saved into preference")
         }.apply()

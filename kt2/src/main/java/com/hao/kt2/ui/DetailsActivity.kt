@@ -4,14 +4,15 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.hao.kt2.R
 
-class SettingActivity : AppCompatActivity() {
+class DetailsActivity : AppCompatActivity() {
+
     companion object {
-        const val ZIP_CODE = "zipCode"
-        const val DEFAULT_ZIP = 94043L
+        const val ID  ="DetailsActivity.id"
+        const val CITY_NAME = "DetailsActivity.cityName"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
+        setContentView(R.layout.activity_details)
     }
 }
