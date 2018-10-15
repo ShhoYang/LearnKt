@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.version.compileSdk
 
     defaultConfig {
         applicationId "com.hao.kt2"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.version.minSdk
+        targetSdkVersion rootProject.ext.version.targetSdk
+        versionCode rootProject.ext.version.versionCode
+        versionName rootProject.ext.version.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -36,24 +36,27 @@ kotlin {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "com.android.support:recyclerview-v7:$support_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.anko:anko-common:$anko_version"
-    implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
-    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.version.support"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.version.support"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.version.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.version.kotlin"
+
+    implementation "org.jetbrains.anko:anko-common:$rootProject.ext.version.anko"
+    implementation "org.jetbrains.anko:anko-sqlite:$rootProject.ext.version.anko"
+    implementation "org.jetbrains.anko:anko-coroutines:$rootProject.ext.version.anko"
     implementation "com.google.code.gson:gson:2.8.0"
     implementation "com.squareup.picasso:picasso:2.5.2"
+    implementation "com.github.zhaokaiqiang.klog:library:1.6.0"
 
     testImplementation "junit:junit:4.12"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "org.mockito:mockito-inline:$mockito_version"
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.version.mockito"
+    testImplementation "org.mockito:mockito-inline:$rootProject.ext.version.mockito"
 
-    androidTestImplementation "com.android.support:support-annotations:$support_version"
-    androidTestImplementation "com.android.support.test:runner:$test_support_version"
-    androidTestImplementation "com.android.support.test:rules:$test_support_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$espresso_version") {
+    androidTestImplementation "com.android.support:support-annotations:$rootProject.ext.version.support"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.version.test_support"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.ext.version.test_support"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.version.espresso"
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.version.espresso") {
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'design'

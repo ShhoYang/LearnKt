@@ -44,7 +44,7 @@ class RhesisFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = RhesisAdapter(mDatas)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!mLoading && !this@RhesisFragment.recyclerView.canScrollVertically(1)) {
                     mCurrentPage++
@@ -74,11 +74,11 @@ class RhesisFragment : Fragment() {
                 if (mCurrentPage == 1) {
                     mDatas.clear()
                     mDatas.addAll(data)
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter?.notifyDataSetChanged()
                 } else {
                     var src = mDatas.size
                     mDatas.addAll(data)
-                    recyclerView.adapter.notifyItemRangeInserted(src, data.size)
+                    recyclerView.adapter?.notifyItemRangeInserted(src, data.size)
                 }
             }
         }

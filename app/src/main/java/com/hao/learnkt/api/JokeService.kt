@@ -20,7 +20,7 @@ class JokeService {
         }
 
         fun getData(page: Int, maxResult: Int = 20): List<Joke>? {
-            var forecastJsonStr: String? = null
+            var forecastJsonStr: String?
             try {
                 forecastJsonStr = URL(buildBaseUrl(page, maxResult)).readText()
             } catch (e: Exception) {

@@ -21,7 +21,7 @@ class HuabanService {
         }
 
         fun getData(type: Int, page: Int, num: Int = 20): MutableList<Huaban>? {
-            var forecastJsonStr: String? = null
+            var forecastJsonStr: String?
             try {
                 forecastJsonStr = URL(buildBaseUrl(type, page, num)).readText()
             } catch (e: Exception) {

@@ -8,7 +8,7 @@ import com.hao.kt2.domain.model.ForecastList
  */
 interface ForecastDataSource {
 
-    fun requestForecastByZipCode(zipCode: Long, date: Long): ForecastList?
+    fun requestForecastByZipCode(zipCode: Long, days: Int): ForecastList?
 
     fun requestDayForecast(id: Long): Forecast?
 }

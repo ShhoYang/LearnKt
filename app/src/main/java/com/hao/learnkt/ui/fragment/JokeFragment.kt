@@ -66,11 +66,11 @@ class JokeFragment : Fragment() {
                 } else if (mCurrentPage == 1) {
                     mDatas.clear()
                     mDatas.addAll(data)
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter?.notifyDataSetChanged()
                 } else {
                     val src = mDatas.size
                     mDatas.addAll(data)
-                    recyclerView.adapter.notifyItemRangeInserted(src, data.size)
+                    recyclerView.adapter?.notifyItemRangeInserted(src, data.size)
                 }
             }
         }

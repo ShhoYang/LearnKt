@@ -13,10 +13,10 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
 
-        val options :RequestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-      /*  Glide.with(this)
-                .load("http://www.zbjuran.com/uploads/allimg/180328/2-1P32Q50P3.gif")
-                .apply(options)
-                .into(imageView)*/
+//        val options :RequestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+//        Glide.with(this)
+//                .load("http://www.zbjuran.com/uploads/allimg/180328/2-1P32Q50P3.gif")
+//                .apply(options)
+//                .into(imageView)
     }
 }

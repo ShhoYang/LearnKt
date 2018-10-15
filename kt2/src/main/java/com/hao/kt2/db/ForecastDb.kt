@@ -13,10 +13,10 @@ import kotlin.collections.HashMap
 class ForecastDb(private val forecastDbHelper: ForecastDbHelper = ForecastDbHelper.instance,
                  private val dataMapper: DbDataMapper = DbDataMapper()) : ForecastDataSource {
 
-    override fun requestForecastByZipCode(zipCode: Long, date: Long) = forecastDbHelper.use {
+    override fun requestForecastByZipCode(zipCode: Long, days: Int) = forecastDbHelper.use {
         val dailyRequest = "${DayForecastTable.CITY_ID} = ? AND ${DayForecastTable.DATE} >= ?"
         val dailyForecast = select(DayForecastTable.NAME)
-                .whereSimple(dailyRequest, zipCode.toString(), date.toString())
+                .whereSimple(dailyRequest, zipCode.toString(), days.toString())
                 .parseList { DayForecast(HashMap(it)) }
         val city = select(CityForecastTable.NAME)
                 .whereSimple("${CityForecastTable.ID} = ?", zipCode.toString())

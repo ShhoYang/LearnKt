@@ -38,7 +38,7 @@ class GifAdapter(var datas: MutableList<Gif>?, val recyclerView: RecyclerView) :
 
     init {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 gifPause()
             }

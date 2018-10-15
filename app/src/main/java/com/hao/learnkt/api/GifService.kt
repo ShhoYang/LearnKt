@@ -20,14 +20,14 @@ class GifService {
         }
 
         fun getData(page: Int, maxResult: Int = 20): List<Gif>? {
-            var json: String? = null
+            var json: String?
             try {
                 json = URL(buildBaseUrl(page, maxResult)).readText()
             } catch (e: Exception) {
                 return null
             }
 
-            Log.d("1111qqqqqqqqq",json)
+            Log.d("1111qqqqqqqqq", json)
             val data = Gson().fromJson(json, GifResult::class.java)
             return data.showapi_res_body.contentlist
         }

@@ -73,11 +73,11 @@ class GifFragment : Fragment() {
                 if (mCurrentPage == 1) {
                     mDatas.clear()
                     mDatas.addAll(data)
-                    recyclerView.adapter.notifyDataSetChanged()
+                    recyclerView.adapter?.notifyDataSetChanged()
                 } else {
                     var src = mDatas.size
                     mDatas.addAll(data)
-                    recyclerView.adapter.notifyItemRangeInserted(src, data.size)
+                    recyclerView.adapter?.notifyItemRangeInserted(src, data.size)
                 }
             }
         }
