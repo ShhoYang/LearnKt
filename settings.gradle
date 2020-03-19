@@ -1,1 +1,3 @@
-include ':app', ':kt2'
+//include ':app'
+//include ':kt2'
+include ':kt3'
